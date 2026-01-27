@@ -5,8 +5,8 @@ import moodTracker1 from "../../assets/moodTracker1.jpg";
 import blogImg from "../../assets/blogImg.jpg";
 import blogImg1 from "../../assets/blogImg1.jpg";
 
-import aiChatBot from "../../assets/aiChatBot.jpg";
-import aiChatBot1 from "../../assets/aiChatBot1.jpg";
+import aiChatBot from "../../assets/aiChatbot.jpg";
+import aiChatBot1 from "../../assets/aiChatbot1.jpg";
 
 import { motion } from 'framer-motion';
 
