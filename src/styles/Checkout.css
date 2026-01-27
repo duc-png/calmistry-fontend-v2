@@ -1,0 +1,477 @@
+.checkout-page-wrapper {
+  --brand-green: #324d3e;
+  --light-green: #74c655;
+  --emerald-500: #10b981;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 50%, #ecfdf5 100%);
+  min-height: 100vh;
+  padding: 120px 20px 60px; /* Đã lùi xuống để tránh Header */
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* HEADER */
+.checkout-top-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.countdown-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #d1fae5;
+  color: #065f46;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--brand-green);
+  letter-spacing: -1px;
+}
+
+/* GRID LAYOUT */
+.checkout-grid-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+}
+
+/* CARDS */
+.form-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+  border-top: 5px solid var(--emerald-500);
+  margin-bottom: 30px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.step-badge {
+  width: 40px;
+  height: 40px;
+  background: var(--emerald-500);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.step-badge.secondary { background: var(--light-green); }
+
+/* INPUTS */
+.input-rows { display: flex; flex-direction: column; gap: 20px; }
+.input-group-half { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.input-field label { display: block; font-size: 0.85rem; font-weight: 700; color: #555; margin-bottom: 8px; }
+.input-field input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  outline: none;
+  transition: 0.3s;
+}
+.input-field input:focus { border-color: var(--emerald-500); background: #f9fffb; }
+
+/* PAYMENT METHODS */
+.payment-selection-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.payment-method-item {
+  border: 2px solid #eee;
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+}
+
+.payment-method-item.active {
+  border-color: var(--emerald-500);
+  background: #f0fdf4;
+}
+
+.method-icon { font-size: 1.5rem; color: #888; }
+.active .method-icon { color: var(--emerald-500); }
+.method-label { display: block; font-weight: 800; font-size: 1rem; }
+.method-desc { font-size: 0.8rem; color: #777; }
+.checked-icon { position: absolute; top: 15px; right: 15px; color: var(--emerald-500); }
+
+/* SIDEBAR SUMMARY */
+.summary-sticky-card {
+  background: var(--brand-green);
+  color: white;
+  padding: 40px;
+  border-radius: 24px;
+  position: sticky;
+  top: 120px;
+}
+
+.summary-title { font-weight: 900; margin-bottom: 30px; }
+.summary-title span { color: var(--light-green); margin-right: 10px; }
+
+.service-highlight {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.service-info h4 { font-weight: 800; margin: 0; }
+.service-info p { color: #a7f3d0; margin: 5px 0; font-size: 0.9rem; }
+
+/* VOUCHER */
+.voucher-input-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.input-wrapper {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.input-wrapper input {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 12px;
+  outline: none;
+  width: 100%;
+}
+
+.apply-btn {
+  background: var(--light-green);
+  color: var(--brand-green);
+  border: none;
+  padding: 0 20px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* PRICE AREA */
+.calc-row { display: flex; justify-content: space-between; margin-bottom: 12px; color: #a7f3d0; }
+.calc-row.discount { color: var(--light-green); font-weight: 700; }
+
+.total-final-row {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.total-amount { font-size: 2.8rem; font-weight: 900; line-height: 1; }
+.total-amount span { font-size: 1rem; color: var(--light-green); }
+
+.pay-now-btn {
+  width: 100%;
+  padding: 20px;
+  background: var(--light-green);
+  color: var(--brand-green);
+  border: none;
+  border-radius: 15px;
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pay-now-btn:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(116,198,85,0.4); }
+
+.trust-badges-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.trust-badges-row div {
+  background: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 1024px) {
+  .checkout-grid-container { grid-template-columns: 1fr; }
+  .summary-sticky-card { position: static; }
+}
+
+/* Sidebar chung */
+.summary-sticky-card {
+  background: #24362b; /* Màu xanh đậm hơn hình cũ một chút để sang hơn */
+  color: white;
+  padding: 35px;
+  border-radius: 28px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.summary-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
+}
+
+/* Service Info */
+.service-minimal {
+  margin-bottom: 25px;
+}
+
+.service-name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.service-name-row h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.base-price {
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.service-sub {
+  font-size: 0.85rem;
+  color: #74c655; /* Màu xanh lá thương hiệu */
+  margin-top: 4px;
+}
+
+/* Voucher - Thiết kế lại thanh mảnh */
+.voucher-minimal {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+  margin-bottom: 25px;
+}
+
+.voucher-minimal input {
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.apply-link {
+  background: transparent;
+  border: none;
+  color: #74c655;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.divider-line {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-bottom: 20px;
+}
+
+/* Price Calc */
+.price-calc-minimal {
+  margin-bottom: 30px;
+}
+
+.calc-row.discount {
+  display: flex;
+  justify-content: space-between;
+  color: #74c655;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.total-row-minimal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.total-price-large {
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.total-price-large small {
+  font-size: 0.8rem;
+  color: #74c655;
+}
+
+/* Button */
+.pay-now-btn-premium {
+  width: 100%;
+  padding: 18px;
+  background: #74c655;
+  color: #24362b;
+  border: none;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pay-now-btn-premium:hover {
+  background: #ffffff;
+  transform: translateY(-3px);
+}
+
+.security-minimal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+/* Trust Row Minimal */
+.trust-row-minimal {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding: 0 10px;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #4b5563; /* Màu xám trầm để không làm xao nhãng */
+}
+
+.trust-item span {
+  font-weight: 600;
+}
+
+.checkout-modern-header {
+  text-align: center;
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Phần thông báo thời gian: Nhỏ, thanh lịch, không vướng */
+.promo-announcement {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #065f46; /* Xanh lá đậm tinh tế */
+  margin-bottom: 20px;
+  padding: 6px 16px;
+  border-bottom: 1px solid rgba(116, 198, 85, 0.2); /* Đường kẻ mờ bên dưới */
+}
+
+.clock-icon-mini {
+  font-size: 0.9rem;
+  margin-top: -2px;
+}
+
+.promo-announcement strong {
+  color: #d97706; /* Màu cam hổ phách nhẹ để nhấn mạnh thời gian mà không bị chói */
+  font-weight: 800;
+}
+
+/* Tiêu đề chính: Font dày, sang trọng */
+.main-title-refined {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--brand-green);
+  line-height: 1;
+  margin-bottom: 15px;
+  letter-spacing: -1.5px;
+}
+
+/* Đường kẻ phân cách nhỏ ở giữa */
+.title-divider {
+  width: 40px;
+  height: 3px;
+  background: var(--light-green);
+  margin: 0 auto 20px;
+  border-radius: 2px;
+}
+.main-subtitle-refined {
+  font-size: 1.1rem;
+  color: #666;
+  font-weight: 400;
+  line-height: 1.6;
+
+  /* Các thuộc tính quan trọng để giữ 1 dòng */
+  white-space: nowrap;       /* Ngăn chặn việc xuống dòng */
+  max-width: none;           /* Loại bỏ giới hạn chiều rộng cũ (500px) */
+  width: auto;               /* Để chiều rộng tự động theo nội dung */
+
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Xử lý cho màn hình điện thoại cực nhỏ để tránh bị tràn màn hình */
+@media (max-width: 480px) {
+  .main-subtitle-refined {
+    font-size: 0.9rem;      /* Giảm kích thước chữ một chút */
+    letter-spacing: -0.2px; /* Thu hẹp khoảng cách chữ để vừa màn hình */
+  }
+}
+
+/* Responsive cho Mobile */
+@media (max-width: 768px) {
+  .main-title-refined {
+    font-size: 2.2rem;
+  }
+  .promo-announcement {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+}

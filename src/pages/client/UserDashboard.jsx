@@ -1,0 +1,382 @@
+import React from 'react';
+import '../../styles/UserDashboard.css';
+// Đảm bảo bạn đã cài: npm install bootstrap-icons hoặc thêm CDN vào index.html
+import { useState } from 'react'; // LỖI 1: Đã thêm { useState } ở đây
+const UserDashboard = () => {
+  const brandGreen = '#324d3e';
+  const lightGreen = '#74c655';
+  const bgSoft = '#fcfdfd';
+
+  // Dữ liệu mẫu để hiển thị trong bảng
+  const myContent = [
+    { id: 1, title: "Hành trình tìm lại sự bình yên", type: "Câu chuyện", status: "Approved", hearts: 125, date: "10/01/2026" },
+    { id: 2, title: "Làm sao để bớt lo âu?", type: "Blog", status: "Pending", hearts: 0, date: "11/01/2026" },
+    { id: 3, title: "Sức mạnh của hơi thở", type: "Câu chuyện", status: "Approved", hearts: 45, date: "05/01/2026" },
+  ];
+
+
+ const [userProfile, setUserProfile] = useState({
+     name: "An Nhiên",
+     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop",
+     address: "Hà Nội, Việt Nam",
+     bio: "Mọi sự thay đổi lớn đều bắt đầu từ những bước chân nhỏ bé nhất.",
+     tier: "Gold" // Có thể là: "Bronze", "Silver", "Gold"
+   });
+
+   const [showEditModal, setShowEditModal] = useState(false);
+   const [tempProfile, setTempProfile] = useState({ ...userProfile });
+
+   // Hàm xác định Icon và Màu sắc dựa trên hạng thành viên
+   const getTierDetails = (tier) => {
+     switch(tier) {
+       // Sử dụng 'bi-trophy-fill' thay cho 'bi-shield-fill'
+       case 'Bronze': return { icon: 'bi-trophy-fill', color: '#cd7f32' }; // Cúp Đồng
+       case 'Silver': return { icon: 'bi-trophy-fill', color: '#c0c0c0' }; // Cúp Bạc
+       case 'Gold': return { icon: 'bi-trophy-fill', color: '#ffd700' };   // Cúp Vàng
+       default: return { icon: 'bi-stars', color: lightGreen };
+     }
+   };
+
+   const currentTier = getTierDetails(userProfile.tier);
+
+  // Hàm lưu thông tin sau khi sửa
+  const handleSaveProfile = () => {
+    setUserProfile({ ...tempProfile });
+    setShowEditModal(false);
+  };
+
+  const handleFileChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        // Kiểm tra định dạng file là ảnh
+        if (!file.type.startsWith('image/')) {
+          alert("Vui lòng chọn một file ảnh!");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          // Cập nhật ảnh vào tempProfile dưới dạng base64 để xem trước
+          setTempProfile({ ...tempProfile, avatar: reader.result });
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  return (
+    <div style={{ backgroundColor: bgSoft, minHeight: '100vh', paddingTop: '120px', paddingBottom: '100px', color: brandGreen }}>
+      <div className="container">
+
+     {/* --- HEADER: CHÀO MỪNG --- */}
+     <div className="row mb-5">
+       <div className="col-12">
+         <div className="p-4 p-md-5 rounded-5 shadow-sm position-relative overflow-hidden border-0 bg-white">
+           <i className="bi bi-flower1 position-absolute" style={{ right: '-20px', top: '-20px', fontSize: '150px', color: '#f0f7f0', zIndex: 0 }}></i>
+
+           <div className="position-relative d-flex flex-column flex-md-row align-items-center" style={{ zIndex: 1 }}>
+
+             {/* Avatar với nút Thiết lập hồ sơ duy nhất ở đây */}
+             <div className="position-relative mb-3 mb-md-0 me-md-4">
+               <img src={userProfile.avatar} alt="Avatar" className="rounded-circle border border-4 border-white shadow-sm" style={{ width: '120px', height: '120px', objectFit: 'cover' }} />
+               <button
+                 onClick={() => { setTempProfile({...userProfile}); setShowEditModal(true); }}
+                 className="btn btn-light btn-sm rounded-circle position-absolute bottom-0 end-0 shadow-sm border action-btn-edit"
+               >
+                 <i className="bi bi-pencil-fill text-muted"></i>
+               </button>
+             </div>
+
+             <div className="text-center text-md-start">
+               <div className="d-flex align-items-center justify-content-center justify-content-md-start mb-2">
+                 {/* Icon thay đổi theo hạng kim loại */}
+                 <i className={`bi ${currentTier.icon} me-2 fs-4`} style={{ color: currentTier.color }}></i>
+                 <span className="fw-bold text-uppercase small tracking-wider" style={{ color: lightGreen }}>Hành trình hôm nay</span>
+               </div>
+
+               {/* Giữ nguyên câu chào cũ */}
+               <h1 className="display-5 fw-bold mb-1">Chào {userProfile.name}, <br/>cứ thong thả thôi.</h1>
+               <p className="text-muted small mb-3"><i className="bi bi-geo-alt me-1"></i>{userProfile.address}</p>
+
+               {/* Giữ nguyên câu Bio (Twist) cũ */}
+               <p className="lead opacity-75 mb-4 italic" style={{ maxWidth: '500px', fontSize: '1.1rem' }}>
+                  "{userProfile.bio}"
+               </p>
+
+               <div className="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
+                 <button className="btn btn-dark rounded-pill px-4 py-2 fw-bold d-flex align-items-center" style={{ backgroundColor: brandGreen }}>
+                   <i className="bi bi-play-fill me-2"></i> Tiếp tục bài học
+                 </button>
+                 <button className="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold d-flex align-items-center">
+                   <i className="bi bi-calendar-event me-2"></i> Lịch sử trị liệu
+                 </button>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+
+       {showEditModal && (
+         <div className="custom-modal-backdrop">
+           <div className="custom-modal-content">
+             <div className="d-flex justify-content-between align-items-center mb-4">
+               <h4 className="fw-bold mb-0">Thiết lập hồ sơ</h4>
+               <button className="btn-close" onClick={() => setShowEditModal(false)}></button>
+             </div>
+
+             {/* Phần tải ảnh đại diện mới */}
+             <div className="mb-4 text-center">
+               <label className="form-label small fw-bold text-muted d-block mb-3">Ảnh đại diện</label>
+               <div className="d-flex justify-content-center">
+                 <label htmlFor="avatar-upload" className="avatar-dashed-circle">
+                   {tempProfile.avatar ? (
+                     <img src={tempProfile.avatar} alt="Preview" className="avatar-preview-img" />
+                   ) : (
+                     <div className="text-muted d-flex flex-column align-items-center">
+                       <i className="bi bi-cloud-arrow-up fs-2"></i>
+                       <span style={{ fontSize: '10px' }}>Tải ảnh lên</span>
+                     </div>
+                   )}
+                   {/* Input file ẩn đi */}
+                   <input
+                     type="file"
+                     id="avatar-upload"
+                     accept="image/*"
+                     onChange={handleFileChange}
+                     hidden
+                   />
+                   <div className="overlay-upload">
+                     <i className="bi bi-camera-fill text-white"></i>
+                   </div>
+                 </label>
+               </div>
+               <small className="text-muted mt-2 d-block" style={{ fontSize: '11px' }}>
+                 Nhấp vào vòng tròn để thay đổi ảnh
+               </small>
+             </div>
+
+             {/* Sửa Họ và tên */}
+             <div className="mb-3">
+               <label className="form-label small fw-bold text-muted">Họ và tên</label>
+               <input
+                 type="text"
+                 className="form-control form-control-custom"
+                 value={tempProfile.name}
+                 onChange={(e) => setTempProfile({...tempProfile, name: e.target.value})}
+               />
+             </div>
+
+             {/* Sửa Địa chỉ */}
+             <div className="mb-4">
+               <label className="form-label small fw-bold text-muted">Địa chỉ</label>
+               <input
+                 type="text"
+                 className="form-control form-control-custom"
+                 value={tempProfile.address}
+                 onChange={(e) => setTempProfile({...tempProfile, address: e.target.value})}
+                 placeholder="Ví dụ: Hà Nội, Việt Nam"
+               />
+             </div>
+
+             <div className="d-grid gap-2">
+               <button onClick={handleSaveProfile} className="btn btn-dark rounded-pill py-3 fw-bold" style={{ backgroundColor: brandGreen }}>
+                 Lưu thay đổi
+               </button>
+               <button onClick={() => setShowEditModal(false)} className="btn btn-link text-muted text-decoration-none">
+                 Hủy bỏ
+               </button>
+             </div>
+           </div>
+         </div>
+       )}
+        <div className="row g-4">
+          {/* --- CỘT TRÁI: DÒNG THỜI GIAN (TIMELINE) --- */}
+          <div className="col-lg-4">
+            <div className="p-4 rounded-5 bg-white shadow-sm h-100 border-0">
+              <h5 className="fw-bold mb-4 d-flex align-items-center">
+                <i className="bi bi-reception-4 me-2" style={{ color: lightGreen }}></i> Lộ trình của bạn
+              </h5>
+
+              <div className="ps-3 border-start border-2" style={{ borderColor: '#f0f0f0 !important' }}>
+
+                {/* Item 1 */}
+                <div className="mb-5 position-relative">
+                  <i className="bi bi-check-circle-fill position-absolute" style={{ left: '-22px', top: '0', fontSize: '18px', color: lightGreen, backgroundColor: 'white' }}></i>
+                  <div className="small text-muted mb-1">08:30 AM</div>
+                  <h6 className="fw-bold mb-0">Thiền định buổi sáng</h6>
+                  <span className="small text-success">Đã hoàn thành <i className="bi bi-patch-check ms-1"></i></span>
+                </div>
+
+                {/* Item 2 */}
+                <div className="mb-5 position-relative">
+                  <i className="bi bi-circle-fill position-absolute" style={{ left: '-22px', top: '0', fontSize: '18px', color: brandGreen, backgroundColor: 'white' }}></i>
+                  <div className="small text-muted mb-1">02:00 PM</div>
+                  <h6 className="fw-bold mb-1">Tư vấn tâm lý trực tuyến</h6>
+                  <p className="small text-muted mb-3"><i className="bi bi-person-video3 me-2"></i>Chuyên gia Minh Anh</p>
+                  <button className="btn btn-sm rounded-pill px-3 shadow-sm" style={{ backgroundColor: brandGreen, color: 'white' }}>
+                    <i className="bi bi-box-arrow-in-right me-1"></i> Tham gia
+                  </button>
+                </div>
+
+                {/* Item 3 */}
+                <div className="position-relative">
+                  <i className="bi bi-circle position-absolute" style={{ left: '-22px', top: '0', fontSize: '18px', color: '#ccc', backgroundColor: 'white' }}></i>
+                  <div className="small text-muted mb-1">09:00 PM</div>
+                  <h6 className="fw-bold mb-0 text-muted">Viết nhật ký cảm xúc</h6>
+                  <i className="bi bi-pencil-square small text-muted"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* --- CỘT PHẢI: CÁC TIỆN ÍCH KHÁC --- */}
+          <div className="col-lg-8">
+             <div className="row g-4">
+
+                {/* Mood Tracker Card */}
+                <div className="col-md-7">
+                  <div className="p-4 rounded-5 h-100 shadow-sm border-0 bg-white card-hover">
+                    <div className="d-flex justify-content-between align-items-start mb-4">
+                      <div className="p-3 rounded-4" style={{ backgroundColor: 'rgba(50, 77, 62, 0.05)' }}>
+                        <i className="bi bi-heart-pulse fs-4" style={{ color: lightGreen }}></i>
+                      </div>
+                      <div className="text-end">
+                        <span className="badge rounded-pill bg-light text-dark border">Hôm nay</span>
+                      </div>
+                    </div>
+                    <h5 className="fw-bold mb-2">Chỉ số tâm trạng</h5>
+                    <p className="small text-muted mb-4">Bạn đã cảm thấy tích cực hơn 20% so với hôm qua.</p>
+                    <div className="d-flex gap-3 fs-3">
+                      <i className="bi bi-emoji-expressionless-fill text-muted cursor-pointer hover-scale"></i>
+                      <i className="bi bi-emoji-smile-fill text-warning cursor-pointer hover-scale"></i>
+                      <i className="bi bi-emoji-laughing-fill text-success cursor-pointer hover-scale"></i>
+                      <i className="bi bi-emoji-heart-eyes-fill text-danger cursor-pointer hover-scale"></i>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stats Card */}
+                <div className="col-md-5">
+                  <div className="p-4 rounded-5 h-100 shadow-sm border-0 text-white" style={{ backgroundColor: brandGreen }}>
+                    <div className="d-flex justify-content-between mb-4">
+                      <i className="bi bi-lightning-charge-fill fs-3 text-warning"></i>
+                      <i className="bi bi-three-dots"></i>
+                    </div>
+                    <h2 className="fw-bold mb-0">12</h2>
+                    <p className="small opacity-75">Ngày duy trì liên tiếp (Streak)</p>
+                    <div className="mt-4 p-2 rounded-4 border border-white-50 text-center small">
+                       <i className="bi bi-trophy me-2"></i> Nhận huy hiệu mới
+                    </div>
+                  </div>
+                </div>
+
+                {/* Exercises Library */}
+                <div className="col-12">
+                   <div className="p-4 rounded-5 shadow-sm border-0 bg-white d-flex align-items-center justify-content-between card-hover">
+                      <div className="d-flex align-items-center">
+                        <div className="p-3 rounded-circle me-3" style={{ backgroundColor: '#e8f5e9' }}>
+                          <i className="bi bi-collection-play text-success fs-4"></i>
+                        </div>
+                        <div>
+                          <h6 className="fw-bold mb-0">Kho bài tập thư giãn</h6>
+                          <p className="small text-muted mb-0">Hơi thở, Âm nhạc trắng & Podcast chữa lành.</p>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <span className="me-2 small fw-bold d-none d-md-inline">Khám phá</span>
+                        <i className="bi bi-arrow-right-circle-fill fs-3 text-success"></i>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Community/Support Card */}
+                <div className="col-12">
+                   <div className="p-4 rounded-5 shadow-sm border-0 bg-white d-flex align-items-center justify-content-between card-hover">
+                      <div className="d-flex align-items-center">
+                        <div className="p-3 rounded-circle me-3" style={{ backgroundColor: '#fff3cd' }}>
+                          <i className="bi bi-chat-heart text-warning fs-4"></i>
+                        </div>
+                        <div>
+                          <h6 className="fw-bold mb-0">Cộng đồng Calmistry</h6>
+                          <p className="small text-muted mb-0">Kết nối với những người cùng hành trình với bạn.</p>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <i className="bi bi-chevron-right fs-4 text-muted"></i>
+                      </div>
+                   </div>
+                </div>
+
+             </div>
+          </div>
+        </div>
+
+
+        {/* --- SECTION: QUẢN LÝ NỘI DUNG CỦA TÔI --- */}
+        <div className="row mt-5">
+          <div className="col-12">
+            <div className="p-4 p-md-5 rounded-5 bg-white shadow-sm border-0">
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <h5 className="fw-bold mb-0 d-flex align-items-center">
+                  <i className="bi bi-journal-text me-2 text-success"></i> Bài viết & Câu chuyện của bạn
+                </h5>
+                <span className="badge rounded-pill bg-light text-dark border fw-normal">{myContent.length} bài viết</span>
+              </div>
+
+              <div className="table-responsive">
+                <table className="table table-hover align-middle border-top">
+                  <thead>
+                    <tr className="small text-muted text-uppercase">
+                      <th className="py-3 border-0">Tiêu đề nội dung</th>
+                      <th className="py-3 border-0 text-center">Trạng thái</th>
+                      <th className="py-3 border-0 text-center">Lượt Tym</th>
+                      <th className="py-3 border-0 text-end">Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {myContent.map((item) => (
+                      <tr key={item.id}>
+                        <td className="py-3 border-0">
+                          <div className="fw-bold mb-0 text-truncate" style={{maxWidth: '250px'}}>{item.title}</div>
+                          <div className="text-muted" style={{fontSize: '11px'}}>{item.type} • {item.date}</div>
+                        </td>
+                        <td className="py-3 border-0 text-center">
+                          {item.status === 'Approved' ? (
+                            <span className="badge rounded-pill bg-success-subtle text-success px-3 fw-normal">
+                              <i className="bi bi-patch-check-fill me-1"></i> Đã duyệt
+                            </span>
+                          ) : (
+                            <span className="badge rounded-pill bg-warning-subtle text-warning-emphasis px-3 fw-normal">
+                              <i className="bi bi-hourglass-split me-1"></i> Chờ duyệt
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-3 border-0 text-center">
+                          <div className="d-flex align-items-center justify-content-center gap-1 text-danger fw-bold">
+                            <i className="bi bi-heart-fill"></i>
+                            <span className="small">{item.hearts}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 border-0 text-end">
+                          <button className="btn btn-sm btn-light rounded-circle me-2 action-btn shadow-sm">
+                            <i className="bi bi-pencil-square text-primary"></i>
+                          </button>
+                          <button className="btn btn-sm btn-light rounded-circle action-btn shadow-sm">
+                            <i className="bi bi-trash3 text-danger"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  );
+};
+
+export default UserDashboard;
+

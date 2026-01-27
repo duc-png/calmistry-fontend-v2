@@ -1,0 +1,622 @@
+/* Card chính */
+.therapy-card {
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.therapy-card:hover {
+  transform: translateY(-8px);
+  outline: 2px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+.therapy-card.active {
+  transform: scale(1.02);
+  outline: 2px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.transition-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+/* Container chứa sub-cards rơi xuống */
+.sub-cards-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(-20px);
+}
+.sub-cards-container.show {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Item con */
+.sub-card-item {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+.sub-cards-container.show .sub-card-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+.sub-card-item:hover {
+  background-color: rgba(255,255,255,0.2) !important;
+  transform: translateX(5px);
+}
+
+/* Thống kê Fade Up */
+.fade-up-element {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-up-element.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-get-matched {
+  background-color: #a6e2a1;
+  color: #324d3e;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+.btn-get-matched:hover {
+  background-color: #8ed088;
+  transform: scale(1.05);
+}
+
+/* Grid ảnh bác sĩ */
+.therapist-image-grid {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-wrapper {
+  position: absolute;
+  overflow: hidden;
+  background: #eee;
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.main-img {
+  width: 240px;
+  height: 280px;
+  z-index: 5;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.top-left {
+  width: 80px;
+  height: 80px;
+  top: 50px;
+  left: 15%;
+  border-radius: 50%;
+}
+
+.top-right {
+  width: 110px;
+  height: 110px;
+  top: 120px;
+  right: 10%;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%;
+}
+
+.bottom-left {
+  width: 100px;
+  height: 120px;
+  bottom: 40px;
+  left: 5%;
+  border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+}
+
+.bottom-center {
+  width: 130px;
+  height: 130px;
+  bottom: 20px;
+  left: 35%;
+  border-radius: 30% 70% 70% 30% / 50% 40% 60% 50%;
+}
+
+.bottom-right {
+  width: 120px;
+  height: 140px;
+  bottom: 100px;
+  right: 5%;
+  border-radius: 50% 50% 20% 80% / 40% 40% 60% 60%;
+}
+
+/* Các chi tiết vẽ tay (Accents) */
+.accent-sparkle {
+  position: absolute;
+  top: -30px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23324d3e' stroke-width='2' stroke-linecap='round'%3E%3Cline x1='12' y1='1' x2='12' y2='4'%3E%3C/line%3E%3Cline x1='12' y1='20' x2='12' y2='23'%3E%3C/line%3E%3Cline x1='4.22' y1='4.22' x2='6.34' y2='6.34'%3E%3C/line%3E%3Cline x1='17.66' y1='17.66' x2='19.78' y2='19.78'%3E%3C/line%3E%3Cline x1='1' y1='12' x2='4' y2='12'%3E%3C/line%3E%3Cline x1='20' y1='12' x2='23' y2='12'%3E%3C/line%3E%3C/svg%3E") no-repeat;
+}
+
+.accent-swirl {
+  position: absolute;
+  bottom: -40px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23324d3e' stroke-width='1.5'%3E%3Cpath d='M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 15 3.5 18 6 20L12 12'/%3E%3C/svg%3E") no-repeat;
+}
+
+@media (max-width: 991px) {
+  .therapist-image-grid {
+    transform: scale(0.8);
+    height: 400px;
+  }
+}
+
+/* Container của từng bước */
+.how-it-works-step {
+  padding: 60px 0;
+}
+
+.step-connector {
+  margin: 20px 0;
+  opacity: 0.6;
+}
+
+/* Base cho collage ảnh */
+.step-collage {
+  position: relative;
+  width: 100%;
+  height: 380px;
+}
+
+.img-box {
+  position: absolute;
+  overflow: hidden;
+  background: white;
+}
+
+.img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bố cục Bước 1: Trải rộng ảnh */
+.woman-box {
+  width: 180px;
+  height: 160px;
+  top: 20px;
+  left: 10%;
+  border-radius: 40px;
+  z-index: 2;
+}
+.doctor-box {
+  width: 160px;
+  height: 180px;
+  bottom: 20px;
+  right: 20%;
+  border-radius: 30px;
+  z-index: 1;
+}
+.illustration-puzzle-box {
+  position: absolute;
+  bottom: 40px;
+  left: 25%;
+  width: 100px;
+  height: 100px;
+  background: #e0f2f1;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  z-index: 3;
+}
+
+/* Bố cục Bước 2: Phóng khoáng hơn */
+.man-tablet-box {
+  width: 260px;
+  height: 180px;
+  bottom: 0;
+  left: 5%;
+  border-radius: 50px 20px 50px 50px;
+  z-index: 2;
+}
+.portrait-box {
+  width: 140px;
+  height: 160px;
+  top: 0;
+  right: 25%;
+  border-radius: 40px;
+  z-index: 1;
+}
+.laptop-overlay {
+  position: absolute;
+  top: 60px;
+  left: 40%;
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  border: 3px solid #fdf2aa;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+/* Bố cục Bước 3: Điện thoại song song */
+.phone-frame {
+  width: 140px;
+  height: 260px;
+  background: #333;
+  border: 6px solid #333;
+  border-radius: 25px;
+  position: absolute;
+  overflow: hidden;
+}
+.phone-1 {
+  left: 15%;
+  bottom: 20px;
+  background: #f5f5f5;
+  z-index: 2;
+}
+.phone-2 {
+  right: 25%;
+  top: 20px;
+  z-index: 3;
+}
+.chat-demo {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 5px;
+  font-size: 8px;
+}
+.chat-demo span {
+  background: #e0e0e0;
+  padding: 5px;
+  border-radius: 5px;
+  width: fit-content;
+}
+.chat-demo span.alt {
+  background: #324d3e;
+  color: white;
+  align-self: flex-end;
+}
+
+/* Các hình khối trang trí (Shapes) */
+.shape-semi-orange-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  background: #ffccbc;
+  border-radius: 0 0 60px 0;
+  opacity: 0.5;
+}
+.shape-dot-green {
+  position: absolute;
+  bottom: 80px;
+  right: 15%;
+  width: 50px;
+  height: 50px;
+  background: #c8e6c9;
+  border-radius: 50%;
+}
+.shape-half-yellow {
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 80px;
+  height: 40px;
+  background: #fff9c4;
+  border-radius: 80px 80px 0 0;
+}
+.shape-square-teal {
+  position: absolute;
+  bottom: 20px;
+  right: 35%;
+  width: 40px;
+  height: 40px;
+  background: #b2ebf2;
+  transform: rotate(20deg);
+}
+.shape-circle-green-bg {
+  position: absolute;
+  top: 100px;
+  left: 10%;
+  width: 70px;
+  height: 70px;
+  background: #e8f5e9;
+  border-radius: 50%;
+}
+.shape-rect-orange {
+  position: absolute;
+  bottom: 40px;
+  right: 20%;
+  width: 60px;
+  height: 30px;
+  background: #ffe0b2;
+  border-radius: 5px;
+}
+
+/* Hiệu ứng nhảy cho mũi tên */
+@keyframes bounceVertical {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-12px);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+}
+
+.bouncing-arrow {
+  display: inline-block;
+  animation: bounceVertical 2s infinite;
+  cursor: pointer;
+  color: #324d3e;
+}
+
+.step-connector {
+  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pricing-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+}
+
+.plan-badge {
+  position: absolute;
+  top: 15px;
+  right: -30px;
+  background: #74c655;
+  color: white;
+  padding: 5px 40px;
+  transform: rotate(45deg);
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.popular-ribbon {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #bb722b;
+  color: white;
+  padding: 5px 20px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.gold-plan {
+  z-index: 2;
+  transform: scale(1.05); /* Làm gói Vàng to hơn một chút để tạo điểm nhấn */
+}
+
+@media (max-width: 992px) {
+  .gold-plan {
+    transform: scale(1);
+  }
+}
+
+.diamond-plan {
+  border: 2px solid #e3f2fd !important;
+}
+
+
+.tet-sale-component {
+  --count: 0;
+  --days: 31;
+  --hours: 24;
+  --minutes: 60;
+  --seconds: 60;
+  --tet-red: #cc0000;
+  --tet-gold: #ffcc00;
+
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: fit-content;
+  margin: auto;
+  padding: 50px;
+  background: radial-gradient(circle, #fff5f5 0%, #ffe4e4 100%);
+  border-radius: 30px;
+  border: 2px solid #ffcccc;
+}
+
+.tet-sale-component .coupon {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 3px solid var(--tet-red);
+  background-color: var(--tet-red);
+  box-shadow: 0 15px 35px rgba(204, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.tet-sale-component .coupon:hover {
+  transform: scale(1.02);
+}
+
+/* Hiệu ứng nhảy chữ giữ từ code của bạn */
+.tet-sale-component .coupon:hover .content h3 > span {
+  animation: jump 0.15s ease-out 1 normal both;
+}
+
+.tet-sale-component .coupon .box {
+  height: 100%;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--tet-gold);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.tet-sale-component .coupon .box span {
+  display: block;
+  font-weight: 800;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.tet-sale-component .coupon .diver {
+  display: block;
+  width: 0px;
+  height: 140px;
+  border: 2px dashed var(--tet-gold);
+}
+
+.tet-sale-component .coupon .content {
+  padding: 1.5rem 2rem;
+  flex: 1;
+  color: #fff;
+  width: 350px;
+}
+
+.tet-sale-component .coupon .content h3 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: var(--tet-gold);
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.tet-sale-component .coupon .content p {
+  color: #ffcccc;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-get-lộc {
+  background: var(--tet-gold);
+  color: var(--tet-red);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Timer giữ nguyên logic slide của bạn nhưng đổi màu */
+.tet-sale-component .timer .item .day span,
+.tet-sale-component .timer .item .hour span,
+.tet-sale-component .timer .item .min span,
+.tet-sale-component .timer .item .sec span {
+  color: var(--tet-red);
+  font-weight: bold;
+}
+
+.tet-sale-component .timer .item p {
+  color: var(--tet-red);
+  opacity: 0.8;
+}
+
+@keyframes jump {
+  0% { transform: translateY(0); scale: 1; }
+  50% { transform: translateY(-10px); scale: 1.1; }
+  100% { transform: translateY(0); scale: 1; }
+}
+
+@keyframes slide {
+  0% { transform: translateY(calc(-40px * var(--count))); }
+  100% { transform: translateY(0); }
+}
+
+.arrow-circle-wrapper {
+  /* 1. Căn giữa tuyệt đối */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 2. Kích thước nhỏ hơn, tinh tế hơn */
+  width: 26px;
+  height: 26px;
+
+  /* 3. Bo tròn và Viền */
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+
+  /* 4. Loại bỏ các khoảng cách thừa có thể làm lệch tâm */
+  padding: 0;
+  line-height: 0;
+  margin-left: 10px; /* Khoảng cách với chữ desc */
+
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  vertical-align: middle; /* Giúp vòng tròn thẳng hàng với dòng chữ */
+}
+
+/* Tinh chỉnh lại mũi tên bên trong */
+.arrow-circle-wrapper .transition-arrow {
+  font-size: 0.9rem; /* Thu nhỏ mũi tên cho cân đối với vòng tròn 26px */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hiệu ứng Hover */
+.therapy-card:hover .arrow-circle-wrapper {
+  background-color: currentColor;
+  transform: scale(1.1);
+}
+
+/* Đảo màu mũi tên khi vòng tròn lấp đầy (dùng cho nền tối) */
+.therapy-card:hover .arrow-circle-wrapper .transition-arrow {
+  filter: invert(1);
+}
+
+#pricing-section {
+  scroll-margin-top: 40px; /* đúng bằng height navbar */
+}
+

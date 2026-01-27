@@ -1,0 +1,143 @@
+        .card-hover {
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+        .card-hover:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 30px rgba(0,0,0,0.05) !important;
+        }
+        .hover-scale {
+          transition: transform 0.2s;
+        }
+        .hover-scale:hover {
+          transform: scale(1.3);
+        }
+        .cursor-pointer {
+          cursor: pointer;
+        }
+        @media (max-width: 768px) {
+          .display-5 { font-size: 2rem; }
+        }
+        .action-btn {
+          width: 35px;
+          height: 35px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+          border: 1px solid #eee !important;
+        }
+
+        .action-btn:hover {
+          background-color: #fff !important;
+          transform: translateY(-2px);
+          box-shadow: 0 5px 10px rgba(0,0,0,0.1) !important;
+        }
+
+        .table-hover tbody tr:hover {
+          background-color: rgba(116, 198, 85, 0.02);
+        }
+
+        /* Nút tròn sửa ảnh đại diện */
+        .action-btn-edit {
+          width: 35px;
+          height: 35px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+
+        .action-btn-edit:hover {
+          transform: scale(1.1);
+          background-color: #fff !important;
+          color: #74c655 !important;
+        }
+
+        /* CSS cho hiệu ứng Modal Chỉnh sửa */
+        .custom-modal-backdrop {
+          position: fixed;
+          top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(50, 77, 62, 0.3);
+          backdrop-filter: blur(8px);
+          z-index: 2000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .custom-modal-content {
+          width: 90%;
+          max-width: 450px;
+          background: white;
+          padding: 2rem;
+          border-radius: 2rem;
+          animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes popIn {
+          from { opacity: 0; transform: scale(0.9); }
+          to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Tùy chỉnh input trong modal */
+        .form-control-custom {
+          background-color: #f8f9fa;
+          border: none;
+          border-radius: 1rem;
+          padding: 0.8rem 1.2rem;
+        }
+
+        .form-control-custom:focus {
+          background-color: #fff;
+          box-shadow: 0 0 0 3px rgba(116, 198, 85, 0.1);
+          outline: none;
+        }
+
+        /* Vòng tròn nét đứt để tải ảnh */
+        .avatar-dashed-circle {
+          width: 120px;
+          height: 120px;
+          border: 2px dashed #74c655; /* Màu lightGreen của bạn */
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          background-color: #fcfdfd;
+        }
+
+        .avatar-dashed-circle:hover {
+          background-color: #f0f7f0;
+          border-color: #324d3e;
+        }
+
+        .avatar-preview-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        /* Hiệu ứng lớp phủ khi di chuột vào ảnh đã có */
+        .overlay-upload {
+          position: absolute;
+          top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(0, 0, 0, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .avatar-dashed-circle:hover .overlay-upload {
+          opacity: 1;
+        }
+
+        /* Đảm bảo modal không bị che khuất */
+        .custom-modal-content {
+          overflow: visible;
+        }

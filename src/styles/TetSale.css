@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700;900&family=Playfair+Display:wght@900&display=swap');
+
+.tet-container-premium {
+    --gold: #D4AF37;
+    --dark-red: #7D0606;
+    --bright-red: #B22222;
+    --black: #1A1A1A;
+
+    background-color: #fdfdfd;
+    padding: 80px 20px;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    border-top: 5px solid var(--gold);
+    border-bottom: 5px solid var(--gold);
+}
+
+/* Background Lanterns */
+.decor-lantern {
+    position: absolute;
+    font-size: 15rem;
+    color: rgba(125, 6, 6, 0.03);
+    z-index: 0;
+}
+.decor-lantern.left { top: -20px; left: -50px; transform: rotate(15deg); }
+.decor-lantern.right { bottom: -20px; right: -50px; transform: rotate(-15deg); }
+
+.tet-content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.tet-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.sub-title {
+    color: var(--gold);
+    letter-spacing: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--dark-red);
+    margin: 15px 0;
+    font-weight: 900;
+}
+.gold-line {
+    width: 80px;
+    height: 3px;
+    background: var(--gold);
+    margin: 0 auto;
+}
+
+/* Coupon Layout */
+.tet-main-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.premium-coupon {
+    display: flex;
+    background: var(--black);
+    color: white;
+    width: 100%;
+    max-width: 700px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: all 0.4s ease;
+}
+.premium-coupon:hover {
+    border-color: var(--gold);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.coupon-info {
+    padding: 50px;
+    flex: 1;
+
+    /* Chuyển thành Flexbox để căn giữa các thành phần bên trong */
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* Căn giữa theo chiều ngang */
+    text-align: center;      /* Căn giữa nội dung chữ của h2 và p */
+}
+.badge {
+    background: var(--gold);
+    color: var(--black);
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.coupon-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    color: var(--gold);
+}
+.coupon-info p {
+    color: #999;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.btn-premium {
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    padding: 12px 30px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: 0.3s;
+}
+.btn-premium:hover {
+    border-color: #ffffff;       /* Đổi viền sang màu TRẮNG tinh khôi */
+    background: rgba(212, 175, 55, 0.1); /* Thêm một chút nền vàng cực nhẹ */
+
+    /* Hiệu ứng bóng đổ phát sáng (Glow) để trông Premium hơn */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+
+    transform: translateY(-2px); /* Nhích nhẹ lên trên tạo cảm giác tương tác */
+}
+.coupon-visual {
+    width: 200px;
+    background: var(--dark-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-left: 2px dashed rgba(255,255,255,0.2);
+}
+.visual-inner { text-align: center; }
+.floating-icon { font-size: 2rem; color: var(--gold); margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
+.percent { font-size: 4rem; font-weight: 900; line-height: 1; display: block; }
+.unit { font-size: 1.5rem; color: var(--gold); font-weight: 700; }
+
+/* Timer Layout */
+.premium-timer {
+    background: var(--dark-red);
+    padding: 40px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 300px;
+}
+.timer-label {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: var(--gold);
+}
+.timer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.timer-unit { text-align: center; }
+.unit-box {
+    background: rgba(0,0,0,0.2);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    border: 1px solid rgba(212,175,55,0.3);
+}
+.timer-unit p { font-size: 0.6rem; margin-top: 8px; color: rgba(255,255,255,0.6); }
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@media (max-width: 768px) {
+    .premium-coupon { flex-direction: column; }
+    .coupon-visual { width: 100%; padding: 40px; border-left: none; border-top: 2px dashed rgba(255,255,255,0.2); }
+    .main-title { font-size: 2rem; }
+}
+
+/* 1. Import font Be Vietnam Pro từ Google Fonts */
+
+/* Giữ lại các font cũ nếu bạn vẫn dùng cho tiêu đề chính */
+
+
+.tet-container-premium {
+    --gold: #D4AF37;
+    --dark-red: #7D0606;
+    /* ... các biến khác giữ nguyên ... */
+    font-family: 'Be Vietnam Pro', sans-serif; /* Font mặc định cho toàn bộ component */
+}
+
+/* 2. Áp dụng cho tiêu đề Voucher */
+.coupon-info h2 {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 900; /* Rất đậm để tạo sự chú ý */
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    color: var(--gold);
+    letter-spacing: -0.5px; /* Sát lại một chút cho hiện đại */
+    text-transform: uppercase;
+}
+
+/* 3. Áp dụng cho nội dung mô tả */
+.coupon-info p {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 400; /* Độ dày vừa phải để dễ đọc */
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+/* Các phần khác giữ nguyên... */
+/* Import các font cũ */
+
+
+/* WRAPPER CHÍNH */
+.tet-curtain-wrapper {
+    position: relative;
+    width: 100%;
+    /* Chiều cao ban đầu để rèm che kín, GSAP sẽ set lại auto sau khi mở */
+    height: 800px;
+    overflow: hidden;
+    background: #1a0000; /* Màu nền tối khi rèm chưa mở */
+}
+
+/* NỘI DUNG BÊN DƯỚI */
+.tet-content-revealed {
+    height: 100%;
+    /* Ban đầu có thể ẩn nhẹ để hiệu ứng reveal đẹp hơn */
+    opacity: 0;
+}
+
+/* --- LỚP RÈM (CURTAIN) --- */
+.curtain-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100; /* Đảm bảo nằm trên cùng */
+    pointer-events: none; /* Để không chặn click vào dây kéo */
+}
+
+.curtain-panel {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: var(--dark-red);
+    /* Tạo hiệu ứng nếp gấp rèm nhung bằng gradient */
+    background: linear-gradient(90deg, #5e0000 0%, #8a0000 50%, #5e0000 100%);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    pointer-events: auto; /* Rèm phải chặn click */
+}
+
+.curtain-panel.left { left: 0; border-right: 2px solid #3a0000; }
+.curtain-panel.right { right: 0; border-left: 2px solid #3a0000; }
+
+/* Hiệu ứng vân vải nhẹ (Tùy chọn) */
+.curtain-fold {
+    position: absolute;
+    width: 100%; height: 100%;
+    background-image: repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0,0,0,0.1) 50px, rgba(0,0,0,0.1) 100px);
+    opacity: 0.3;
+}
+
+/* --- SỢI DÂY KÉO (ROPE) --- */
+.rope-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 101;
+    cursor: pointer;
+    pointer-events: auto; /* Để click được */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rope-line {
+    width: 4px;
+    height: 300px; /* Chiều dài dây */
+    background: var(--gold);
+    /* Tạo hiệu ứng dây thừng xoắn */
+    background-image: linear-gradient(45deg, #b88a00 25%, transparent 25%, transparent 50%, #b88a00 50%, #b88a00 75%, transparent 75%, transparent);
+    background-size: 10px 10px;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.rope-handle {
+    /* 1. Hiệu ứng Mạ Vàng (Metallic Gold Gradient) */
+    background: linear-gradient(
+        to bottom,
+        #bf953f 0%,
+        #fcf6ba 50%,
+        #b38728 100%
+    );
+
+    /* 2. Chữ Đỏ Đậm - Rất rõ nét trên nền vàng */
+    color: #7d0606;
+
+    padding: 15px 45px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+
+    /* 3. Bo góc tròn hoàn toàn (Kiểu viên thuốc) */
+    border-radius: 50px;
+
+    /* 4. Viền trắng tinh khôi giúp tách biệt nút khỏi rèm đỏ */
+    border: 3px solid #ffffff;
+
+    /* 5. Đổ bóng sâu tạo hiệu ứng 3D nổi khối */
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.5),
+        inset 0 0 15px rgba(255,255,255,0.6);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+
+    /* Đảm bảo không bị vỡ dòng chữ */
+    white-space: nowrap;
+}
+
+/* Hiệu ứng khi di chuột: Nút to ra và sáng rực lên */
+.rope-handle:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.6),
+        0 0 25px rgba(255, 246, 186, 0.8);
+    cursor: pointer;
+}
+.rope-handle svg {
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
+}
+
+.rope-handle:hover {
+    transform: scale(1.05);
+    background: linear-gradient(
+        to bottom,
+        #fcf6ba 0%,
+        #bf953f 50%,
+        #fcf6ba 100%
+    ); /* Đảo ngược gradient tạo hiệu ứng lấp lánh */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255, 246, 186, 0.6);
+}
+
+/* --- CSS CŨ CỦA BẠN (Giữ lại các biến màu) --- */
+.tet-container-premium {
+    --gold: #D4AF37;
+    --dark-red: #7D0606;
+    /* ... các CSS cũ của nội dung bên trong ... */
+}
