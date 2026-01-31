@@ -18,7 +18,7 @@ const StatsSection = ({ stats, statsBg, brandGreen }) => {
                   </svg>
                 </div>
                 <h2 className="display-4 mb-4" style={{ fontWeight: '300', lineHeight: '1.1', letterSpacing: '-1px' }}>
-                  The world's largest <br /> therapy service. <br />
+                  Chăm sóc sức khỏe tinh thần <br /> Mọi lúc, mọi nơi. <br />
                   <span style={{ color: '#397a4a', fontWeight: '400' }}>100% online.</span>
                 </h2>
               </div>

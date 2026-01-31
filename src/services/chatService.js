@@ -10,6 +10,13 @@ class ChatService {
     }
 
     connect(onMessageReceived, onConnectedCallback, onErrorCallback) {
+        // Prevent duplicate connections
+        if (this.stompClient && this.stompClient.connected) {
+            console.log('Already connected to chat');
+            if (onConnectedCallback) onConnectedCallback();
+            return;
+        }
+
         const socket = new SockJS(WS_URL);
         this.stompClient = Stomp.over(socket);
 

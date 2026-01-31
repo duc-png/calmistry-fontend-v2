@@ -8,6 +8,24 @@ const userService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    getAllUsers: async () => {
+        try {
+            const response = await api.get('/users/all-accounts');
+            return response.result;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    updateUserRole: async (userId, roleName) => {
+        try {
+            const response = await api.put(`/users/${userId}/role`, { roleName });
+            return response.result;
+        } catch (error) {
+            throw error;
+        }
     }
 };
 

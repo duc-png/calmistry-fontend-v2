@@ -2,10 +2,13 @@ import { Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import { AnimatePresence } from "framer-motion";
+import PrivateRoute from "./PrivateRoute";
 
 // Client pages
 import Home from "../pages/client/Home";
 import Blog from "../pages/client/Blog";
+import CreateBlog from "../pages/client/CreateBlog";
+import BlogApproval from "../pages/client/BlogApproval";
 import BlogDetail from "../pages/client/BlogDetail";
 import Journal from "../pages/client/Journal";
 import SleepManagement from "../pages/client/SleepManagement";
@@ -13,12 +16,16 @@ import UserDashboard from "../pages/client/UserDashboard";
 import ShareStories from "../pages/client/ShareStories";
 import GroupChat from "../pages/client/GroupChat";
 import Checkout from "../pages/client/Checkout";
+import FuiedsQuiz from "../pages/client/FuiedsQuiz";
 
 // Author pages
 import AuthorDashboard from "../pages/author/AuthorDashboard";
 
 // Expert pages
 import ExpertDashboardPro from "../pages/expert/ExpertDashboardPro";
+
+// Admin pages
+import AccountManagement from "../pages/admin/AccountManagement";
 
 // Auth pages
 import Login from "../pages/auth/Login";
@@ -41,7 +48,25 @@ function AppRoutes() {
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
-            <Route path="/journal" element={<Journal />} />
+
+            {/* Create Blog - Protected */}
+            <Route path="/blog/create" element={
+              <PrivateRoute>
+                <CreateBlog />
+              </PrivateRoute>
+            } />
+            {/* Approve Blog - Protected (Ideally should verify role in PrivateRoute or component) */}
+            <Route path="/blog/approval" element={
+              <PrivateRoute>
+                <BlogApproval />
+              </PrivateRoute>
+            } />
+            {/* Protected Route - Requires Login */}
+            <Route path="/journal" element={
+              <PrivateRoute>
+                <Journal />
+              </PrivateRoute>
+            } />
             <Route path="/login" element={<Login />} />
             <Route path="/sleepManagement" element={<SleepManagement />} />
             <Route path="/userDashboard" element={<UserDashboard />} />
@@ -51,6 +76,20 @@ function AppRoutes() {
             <Route path="/shareStories" element={<ShareStories />} />
             <Route path="/group-chat" element={<GroupChat />} />
             <Route path="/checkout" element={<Checkout />} />
+
+            {/* Admin Route - Account Management */}
+            <Route path="/admin/accounts" element={
+              <PrivateRoute>
+                <AccountManagement />
+              </PrivateRoute>
+            } />
+
+            {/* FUIEDS Quiz - Protected Route */}
+            <Route path="/fuieds-quiz" element={
+              <PrivateRoute>
+                <FuiedsQuiz />
+              </PrivateRoute>
+            } />
 
           </Route>
 

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import journalService from '../../services/journalService';
 import '../../styles/Journal.css';
 
-const JournalApp = () => {
+const Journal = () => {
   const brandGreen = '#324d3e';
   const lightGreen = '#8ec339';
 
@@ -31,7 +31,15 @@ const JournalApp = () => {
       setEntries(data);
     } catch (e) {
       console.error('Error fetching journals:', e);
-      setError('Không thể tải nhật ký. Vui lòng thử lại.');
+      // If 401 unauthorized, redirect to login
+      if (e?.status === 401) {
+        setError('Vui lòng đăng nhập để xem nhật ký của bạn.');
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 2000);
+      } else {
+        setError('Không thể tải nhật ký. Vui lòng thử lại.');
+      }
     } finally {
       setLoading(false);
     }
@@ -302,4 +310,4 @@ const saveBtn = { width: '100%', padding: '16px', color: '#fff', border: 'none',
 const iconBtn = { background: 'none', border: 'none', padding: '6px', cursor: 'pointer' };
 const cardActions = { display: 'flex', gap: '4px' };
 
-export default JournalApp;
+export default Journal;

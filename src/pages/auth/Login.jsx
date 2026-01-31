@@ -6,59 +6,50 @@ import SocialButtons from '../../components/auth/SocialButtons';
 import '../../styles/Login.css';
 import authService from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 const AuthPages = () => {
-
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const brandGreen = '#3a5a40';
   const lightGreen = '#8ec339';
   const softBg = '#f4f7f5';
 
   const [currentPage, setCurrentPage] = useState('login');
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phoneNumber: ''
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Validate email format
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // Validate form inputs
   const validateForm = () => {
     setError('');
-
-    if (!formData.email.trim()) {
-      setError('Vui lòng nhập email');
-      return false;
-    }
-
-    if (!isValidEmail(formData.email)) {
-      setError('Email không hợp lệ');
-      return false;
-    }
-
-    if (!formData.password.trim()) {
-      setError('Vui lòng nhập mật khẩu');
-      return false;
-    }
-
+    if (!formData.email.trim()) return setError('Vui lòng nhập email'), false;
+    if (!isValidEmail(formData.email)) return setError('Email không hợp lệ'), false;
+    if (!formData.password.trim()) return setError('Vui lòng nhập mật khẩu'), false;
 
     if (currentPage === 'register') {
-      if (!formData.name.trim()) {
-        setError('Vui lòng nhập họ và tên');
-        return false;
-      }
+      if (!formData.name.trim()) return setError('Vui lòng nhập họ và tên'), false;
+      if (formData.password.length < 6) return setError('Mật khẩu phải có ít nhất 6 ký tự'), false;
+      if (formData.password !== formData.confirmPassword)
+        return setError('Mật khẩu xác nhận không khớp'), false;
     }
-
     return true;
   };
 
   const handleSubmit = async () => {
-    // Validate inputs
+    console.log('🔍 [Submit] Start - currentPage:', currentPage);
+    console.log('🔍 [Submit] FormData:', formData);
+
     if (!validateForm()) {
+      console.log('❌ [Submit] Validation failed');
       return;
     }
 
@@ -67,6 +58,7 @@ const AuthPages = () => {
 
     try {
       if (currentPage === 'login') {
+        console.log('🔑 [Login] Starting...');
         const result = await authService.login(
           formData.email,
           formData.password,
@@ -74,35 +66,46 @@ const AuthPages = () => {
         );
 
         if (result && result.authenticated) {
-          // Successful login - redirect to home
+          // 🔥 QUAN TRỌNG: refresh user cache
+          await queryClient.invalidateQueries(['me']);
           navigate('/', { replace: true });
         } else {
           setError('Đăng nhập thất bại. Vui lòng thử lại.');
         }
       } else {
-        // Register flow
+        console.log('📝 [Register] Starting...');
+        console.log('📝 [Register] Payload:', {
+          username: formData.name,
+          email: formData.email,
+          password: formData.password,
+          fullName: formData.name,
+          phoneNumber: formData.phoneNumber
+        });
+
         const result = await authService.register({
           username: formData.name,
           email: formData.email,
           password: formData.password,
-          fullName: formData.name
+          fullName: formData.name,
+          phoneNumber: formData.phoneNumber
         });
 
+        console.log('✅ [Register] Success:', result);
+
         if (result) {
-          // Successful registration - redirect to home or login
           alert('Đăng ký thành công! Vui lòng đăng nhập.');
           setCurrentPage('login');
-          setFormData({ name: '', email: '', password: '' });
+          setFormData({ name: '', email: '', password: '', confirmPassword: '', phoneNumber: '' });
         }
       }
     } catch (e) {
-      console.error('Authentication error:', e);
-
-      // Extract error message from response
-      const errorMessage = e?.data?.message || e?.message ||
+      console.error('❌ [Submit] Error:', e);
+      const errorMessage =
+        e?.data?.message ||
+        e?.message ||
         (currentPage === 'login'
-          ? 'Sai email hoặc mật khẩu. Vui lòng thử lại.'
-          : 'Đăng ký thất bại. Email có thể đã được sử dụng.');
+          ? 'Sai email hoặc mật khẩu.'
+          : 'Đăng ký thất bại.');
 
       setError(errorMessage);
     } finally {
@@ -195,14 +198,35 @@ const AuthPages = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
+                  {currentPage === 'register' && (
+                    <FormInput
+                      label="Số điện thoại"
+                      type="tel"
+                      placeholder="0123456789"
+                      value={formData.phoneNumber}
+                      onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                    />
+                  )}
                   <FormInput
                     label="Mật khẩu"
                     type="password"
                     placeholder="••••••••"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    style={{ marginBottom: '24px' }}
                   />
+                  {currentPage === 'register' && (
+                    <FormInput
+                      label="Nhập lại mật khẩu"
+                      type="password"
+                      placeholder="••••••••"
+                      value={formData.confirmPassword}
+                      onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                      style={{ marginBottom: '24px' }}
+                    />
+                  )}
+                  {currentPage === 'login' && (
+                    <div style={{ marginBottom: '24px' }} />
+                  )}
 
                   {/* Error message display */}
                   {error && (

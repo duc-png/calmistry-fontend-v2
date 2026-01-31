@@ -73,7 +73,7 @@ const authService = {
    */
   getCurrentUser: async () => {
     try {
-      return await api.get('/auth/me');
+      return await api.get('/users/my-info');
     } catch (error) {
       throw error;
     }

@@ -41,14 +41,14 @@ const handleResponse = async (response) => {
     const errorData = await response.json().catch(() => ({
       message: response.statusText || 'Có lỗi xảy ra'
     }));
-    
+
     // Nếu token hết hạn hoặc không hợp lệ
     if (response.status === 401) {
       removeToken();
       // Có thể redirect đến trang login ở đây
       window.location.href = '/login';
     }
-    
+
     throw {
       status: response.status,
       statusText: response.statusText,
@@ -56,13 +56,13 @@ const handleResponse = async (response) => {
       message: errorData.message || 'Có lỗi xảy ra'
     };
   }
-  
+
   // Xử lý response rỗng
   const contentType = response.headers.get('content-type');
   if (contentType && contentType.includes('application/json')) {
     return await response.json();
   }
-  
+
   return await response.text();
 };
 
@@ -74,13 +74,22 @@ const createHeaders = (customHeaders = {}) => {
     'Content-Type': 'application/json',
     ...customHeaders
   };
-  
+
   // Thêm token nếu có
   const token = getToken();
+  console.log('🔑 [API] Token check:', {
+    hasToken: !!token,
+    tokenLength: token?.length,
+    tokenPreview: token ? token.substring(0, 20) + '...' : 'null'
+  });
+
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
+    console.log('✅ [API] Authorization header added');
+  } else {
+    console.warn('⚠️ [API] No token found - request will be sent without auth');
   }
-  
+
   return headers;
 };
 
@@ -89,12 +98,14 @@ const createHeaders = (customHeaders = {}) => {
  */
 const apiRequest = async (endpoint, options = {}) => {
   const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`;
-  
+
+  console.log('🌐 API Request:', { url, method: options.method || 'GET' });
+
   const config = {
     ...options,
     headers: createHeaders(options.headers)
   };
-  
+
   try {
     const response = await fetch(url, config);
     return await handleResponse(response);
@@ -122,12 +133,12 @@ const api = {
     // Thêm query params vào URL
     const queryString = new URLSearchParams(params).toString();
     const url = queryString ? `${endpoint}?${queryString}` : endpoint;
-    
+
     return apiRequest(url, {
       method: 'GET'
     });
   },
-  
+
   /**
    * POST request
    */
@@ -137,7 +148,7 @@ const api = {
       body: JSON.stringify(data)
     });
   },
-  
+
   /**
    * PUT request
    */
@@ -147,7 +158,7 @@ const api = {
       body: JSON.stringify(data)
     });
   },
-  
+
   /**
    * PATCH request
    */
@@ -157,7 +168,7 @@ const api = {
       body: JSON.stringify(data)
     });
   },
-  
+
   /**
    * DELETE request
    */
@@ -166,27 +177,27 @@ const api = {
       method: 'DELETE'
     });
   },
-  
+
   /**
    * Upload file
    */
   upload: async (endpoint, formData) => {
     const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`;
     const token = getToken();
-    
+
     const headers = {};
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
     // Không set Content-Type cho FormData, browser sẽ tự động set với boundary
-    
+
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers,
         body: formData
       });
-      
+
       return await handleResponse(response);
     } catch (error) {
       if (error.name === 'TypeError' && error.message.includes('fetch')) {
@@ -199,7 +210,7 @@ const api = {
       throw error;
     }
   },
-  
+
   /**
    * Token management
    */

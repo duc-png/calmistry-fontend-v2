@@ -18,9 +18,16 @@ const journalService = {
             if (search && search.trim()) params.search = search;
             if (mood && mood !== 'all') params.mood = mood;
 
+            console.log('🔍 [Journal API] Calling GET /journals with params:', JSON.stringify(params));
             const response = await api.get('/journals', params);
+            console.log('✅ [Journal API] Success! Response:', JSON.stringify(response));
             return response.result;
         } catch (error) {
+            console.error('❌ [Journal API] Error details:', {
+                message: error.message,
+                status: error.status,
+                data: error.data
+            });
             throw error;
         }
     },
